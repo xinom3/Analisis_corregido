@@ -1,0 +1,74 @@
+ID_Global,Fuente,Persona,Monto,Fecha,Abonos,Saldo,Notas
+1,Libreta José Luis,José Luis (Deudor),5000.0,15 de noviembre de 2022,3000.0,2000.0,Solo intereses
+2,Libreta José Luis,José Luis (Deudor),5000.0,10 de octubre de 2022,0.0,5000.0,sn
+3,Libreta José Luis,José Luis (Deudor),5000.0,20 de julio de 2022,0.0,5000.0,sn
+4,Libreta José Luis,José Luis (Deudor),3000.0,11 de diciembre de 2022,0.0,3000.0,sn
+5,Libreta José Luis,José Luis (Deudor),5000.0,28 de noviembre de 2022,0.0,5000.0,sn
+6,Libreta José Luis,José Luis (Deudor),5000.0,20 de julio de 2023,500.0,4500.0,Pago intereses agosto
+7,Libreta José Luis,José Luis (Deudor),5000.0,8 de julio de 2023,0.0,5000.0,Hace referencia a un prestamo de 20000 que solo restan 5000
+8,Libreta José Luis,José Luis (Deudor),10000.0,29 de marzo de 2023,10400.0,-400.0,Abajo anoto que restan 7600 pero los pago no dan ese resultado
+9,Libreta José Luis,José Luis (Deudor),5000.0,24 de febrero de 2023,500.0,4500.0,Se pago intereses marzo
+10,Libreta José Luis,José Luis (Deudor),3000.0,11 de abril de 2023,600.0,2400.0,Se pago mayo y junio
+11,Libreta José Luis,José Luis (Deudor),5000.0,6 de julio de 2025,4300.0,700.0,Se realizaron 43 pagos de $100
+12,Libreta José Luis,José Luis (Deudor),10000.0,19 de julio de 2023,800.0,9200.0,Solo se aboono un pago de 800 de un total de 16 semanales
+13,Libreta José Luis,José Luis (Deudor),5000.0,5 de diciembre de 2023,0.0,5000.0,-
+14,Libreta José Luis,José Luis (Deudor),30000.0,,0.0,30000.0,este esl prestamo que se le dio por el terreno
+15,Libreta María Elena,María Elena (Deudora),5000.0,23 de octubre de 2023,1400.0,3600.0,Solo se realizaron 7 pagos de 200 el credito se realizo grupal
+16,Libreta María Elena,María Elena (Deudora),5000.0,28 de marzo de 2024,0.0,5000.0,No se dio nada de interes
+17,Libreta María Elena,María Elena (Deudora),15000.0,4 de noviembre de 2024,0.0,15000.0,Mayra tiene el control de este prestamo que se realizo a jorge 
+18,Libreta María Elena,María Elena (Deudora),10000.0,30 de agosto de 2024,1000.0,9000.0,Se pago solo el mes de septiembre de intereses
+19,Libreta María Elena,María Elena (Deudora),3000.0,26 de julio de 2024,300.0,2700.0,Se pago agosto de intereses
+20,Libreta María Elena,María Elena (Deudora),7600.0,14 de marzo de 2024,2000.0,5600.0,No se tiene referencia solo aparece abonado 2000 pesos
+21,Libreta María Elena,María Elena (Deudora),6000.0,30 de mayo de 2024,0.0,6000.0,Intereses de un prestamo a mi tia muñe que mi papa se dejo los intereses y mi tia muñe dijo que si preguntaba ella los daria
+22,Libreta María Elena,María Elena (Deudora),8000.0,8 de agosto de 2024,0.0,8000.0,-
+23,Libreta María Elena,María Elena (Deudora),7650.0,25 de abril de 2025,1421.0,6229.0,Se realizo renovacion al 50% de un prestamo que tenia de 12000
+24,Libreta María Elena,María Elena (Deudora),3600.0,23 de septiembre de 2025,0.0,3600.0,-
+25,Libreta María Elena,María Elena (Deudora),5000.0,no tiene fecha,800.0,4200.0,Prestamo actual
+26,Libreta María Elena,María Elena (Deudora),2000.0,3 de febrero de 2025,0.0,2000.0,Sin notas
+27,Libreta María Elena,María Elena (Deudora),3000.0,10 de febrero de 2023,0.0,3000.0,Sin notas
+28,Libreta Mari (sobre José Luis),José Luis (según Mari),5000.0,5 Dic,0.0,5000.0,sn
+29,Libreta Mari (sobre José Luis),José Luis (según Mari),5000.0,15 Nov,0.0,5000.0,sn
+30,Libreta Mari (sobre José Luis),José Luis (según Mari),4000.0,sn,0.0,4000.0,sn
+31,Libreta Mari (sobre José Luis),José Luis (según Mari),5000.0,10 Octubre,0.0,5000.0,sn
+32,Libreta Mari (sobre José Luis),José Luis (según Mari),3000.0,4 Dic,0.0,3000.0,sn
+33,Libreta Mari (sobre José Luis),José Luis (según Mari),5000.0,28 Nov,0.0,5000.0,sn
+34,Libreta Mari (sobre José Luis),José Luis (según Mari),5000.0,20 Julio,0.0,5000.0,sn
+35,Libreta Mari (sobre José Luis),José Luis (según Mari),5000.0,8 Junio,0.0,5000.0,sn
+36,Libreta Mari (sobre José Luis),José Luis (según Mari),3000.0,18 Enero,0.0,3000.0,sn
+37,Libreta Mari (sobre José Luis),José Luis (según Mari),7600.0,29 Marzo,0.0,7600.0,sn
+38,Libreta Mari (sobre José Luis),José Luis (según Mari),5000.0,24 Febrero,0.0,5000.0,sn
+39,Libreta Mari (sobre José Luis),José Luis (según Mari),3000.0,11 Abril,0.0,3000.0,sn
+40,Libreta Mari (sobre José Luis),José Luis (según Mari),10000.0,19 Julio,0.0,10000.0,sn
+41,Libreta Mari (sobre José Luis),José Luis (según Mari),2500.0,sn,0.0,2500.0,sn
+42,Libreta Mari (sobre José Luis),José Luis (según Mari),12000.0,sn,0.0,12000.0,sn
+43,Libreta Mari (sobre José Luis),José Luis (según Mari),10000.0,28 Sep,0.0,10000.0,sn
+44,Libreta Mari (sobre María Elena),María Elena (según Mari),5000.0,7 Abril,0.0,5000.0,sn
+45,Libreta Mari (sobre María Elena),María Elena (según Mari),4000.0,sn,0.0,4000.0,de los pagos de 400
+46,Libreta Mari (sobre María Elena),María Elena (según Mari),5000.0,3 Nov,0.0,5000.0,sn
+47,Libreta Mari (sobre María Elena),María Elena (según Mari),5000.0,23 Oct,0.0,5000.0,sn
+48,Libreta Mari (sobre María Elena),María Elena (según Mari),400.0,sn,0.0,400.0,sn
+49,Libreta Mari (sobre María Elena),María Elena (según Mari),6000.0,sn,0.0,6000.0,Dora
+50,Libreta Mari (sobre María Elena),María Elena (según Mari),8600.0,sn,0.0,8600.0,sn
+51,Libreta Mari (sobre María Elena),María Elena (según Mari),5600.0,sn,0.0,5600.0,Jose
+52,Libreta Mari (sobre María Elena),María Elena (según Mari),2500.0,sn,0.0,2500.0,Chave
+53,Libreta Mari (sobre María Elena),María Elena (según Mari),2000.0,sn,0.0,2000.0,Ayunt
+54,Libreta Mari (sobre María Elena),María Elena (según Mari),1000.0,Mayo,0.0,1000.0,sn
+55,Libreta Mari (sobre María Elena),María Elena (según Mari),4000.0,sn,0.0,4000.0,Int. Pend.
+56,Libreta Mari (sobre María Elena),María Elena (según Mari),500.0,sn,0.0,500.0,Int. Pend.
+57,Libreta Mari (sobre María Elena),María Elena (según Mari),4400.0,9 Abril,0.0,4400.0,sn
+58,Libreta Mari (sobre María Elena),María Elena (según Mari),10000.0,sn,0.0,10000.0,Yerno
+59,Libreta Mari (sobre María Elena),María Elena (según Mari),1000.0,sn,0.0,1000.0,Int. Pend.
+60,Libreta Mari (sobre María Elena),María Elena (según Mari),5000.0,sn,0.0,5000.0,Felix
+61,Libreta Mari (sobre María Elena),María Elena (según Mari),2000.0,sn,0.0,2000.0,Intereses
+62,Libreta Mari (sobre María Elena),María Elena (según Mari),8000.0,sn,0.0,8000.0,Alma
+63,Libreta Mari (sobre María Elena),María Elena (según Mari),5000.0,sn,0.0,5000.0,Alma
+64,Libreta Mari (sobre María Elena),María Elena (según Mari),5000.0,28 Marzo,0.0,5000.0,sn
+65,Libreta Mari (sobre María Elena),María Elena (según Mari),10000.0,30 Ags,0.0,10000.0,sn
+66,Libreta Mari (sobre María Elena),María Elena (según Mari),3000.0,26 Julio,0.0,3000.0,sn
+67,Libreta Mari (sobre María Elena),María Elena (según Mari),2640.0,sn,0.0,2640.0,sn
+68,Libreta Mari (sobre María Elena),María Elena (según Mari),7650.0,sn,0.0,7650.0,sn
+69,Libreta Mari (sobre María Elena),María Elena (según Mari),3600.0,23 Sep,0.0,3600.0,sn
+70,Libreta Mari (sobre María Elena),María Elena (según Mari),1200.0,sn,0.0,1200.0,Manuela
+71,Libreta Mari (sobre María Elena),María Elena (según Mari),400.0,sn,0.0,400.0,Mireya
+72,Libreta Mari (sobre María Elena),María Elena (según Mari),35000.0,sn,0.0,35000.0,sn
+73,Libreta Mari (sobre María Elena),María Elena (según Mari),30000.0,19 Sep,0.0,30000.0,Don Jose
