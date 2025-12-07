@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de Reconciliación de Préstamos</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: #f8f9fa;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .card.verde {
+            border-left-color: #27ae60;
+        }
+
+        .card.rojo {
+            border-left-color: #e74c3c;
+        }
+
+        .card.naranja {
+            border-left-color: #f39c12;
+        }
+
+        .card h4 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 0.95em;
+        }
+
+        .card-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .card.verde .card-value {
+            color: #27ae60;
+        }
+
+        .card.rojo .card-value {
+            color: #e74c3c;
+        }
+
+        .card.naranja .card-value {
+            color: #f39c12;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin-bottom: 30px;
+        }
+
+        .chart-container-small {
+            position: relative;
+            height: 300px;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        table thead {
+            background: #667eea;
+            color: white;
+        }
+
+        table th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .status-ok {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-danger {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status-info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .box-resumen {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .box-resumen h3 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .box-resumen p {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .highlight {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .conclusiones {
+            background: #f0f4ff;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .conclusiones li {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.95em;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            background: #e0e0e0;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: #667eea;
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+
+            .grid-2,
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Análisis de Reconciliación de Préstamos</h1>
+            <p>Cruce de montos entre Mari (acreedor) y padres (deudores)</p>
+            <p style="font-size: 0.9em; opacity: 0.8; margin-top: 10px;">Generado: 7 de diciembre de 2025</p>
+        </div>
+
+        <div class="content">
+            <!-- RESUMEN EJECUTIVO -->
+            <div class="section">
+                <h2>📌 Resumen Ejecutivo</h2>
+                <div class="box-resumen">
+                    <h3>Hallazgo Principal</h3>
+                    <p>Se identificaron <span class="highlight">22 montos únicos</span> en total, de los cuales <span
+                            class="highlight">10 están confirmados</span> (presentes en ambas libretas).</p>
+                    <p style="margin-top: 15px;">El <span class="highlight">monto mínimo confirmado que deben pagar los
+                            padres es $139,829.00</span> (considerando solo montos cruzados y abonos verificados).</p>
+                </div>
+
+                <div class="grid-3">
+                    <div class="card verde">
+                        <h4>✅ Monto Confirmado</h4>
+                        <div class="card-value">$166,850</div>
+                        <p style="font-size: 0.9em; margin-top: 5px;">10 montos únicos</p>
+                    </div>
+                    <div class="card naranja">
+                        <h4>⚠️ Pendiente Verificación</h4>
+                        <div class="card-value">$18,340</div>
+                        <p style="font-size: 0.9em; margin-top: 5px;">10 montos a revisar</p>
+                    </div>
+                    <div class="card rojo">
+                        <h4>❌ Posibles Terceros</h4>
+                        <div class="card-value">$77,000</div>
+                        <p style="font-size: 0.9em; margin-top: 5px;">7 montos NO pagar</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GRÁFICOS -->
+            <div class="section">
+                <h2>📈 Visualización de Datos</h2>
+
+                <h3>Distribución de Montos por Categoría</h3>
+                <div class="grid-2">
+                    <div class="chart-container">
+                        <canvas id="grafico-pie"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="grafico-barras"></canvas>
+                    </div>
+                </div>
+
+                <h3>Montos por Persona</h3>
+                <div class="chart-container-small">
+                    <canvas id="grafico-personas"></canvas>
+                </div>
+            </div>
+
+            <!-- SALDO PENDIENTE -->
+            <div class="section">
+                <h2>💰 Cálculo de Saldo Pendiente</h2>
+
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                    <h3 style="color: #333;">Desglose Financiero</h3>
+                    <table>
+                        <tbody>
+                            <tr style="font-weight: 600; background: #f0f4ff;">
+                                <td>Total en libreta de Mari</td>
+                                <td style="text-align: right; color: #667eea;">$273,590.00</td>
+                            </tr>
+                            <tr>
+                                <td style="color: #666;"> - Abonos registrados totales</td>
+                                <td style="text-align: right; color: #666;">$(34,761.00)</td>
+                            </tr>
+                            <tr style="background: #f0f4ff; font-weight: 600;">
+                                <td>= Saldo total en libreta</td>
+                                <td style="text-align: right; color: #667eea;">$238,829.00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <table style="margin-top: 30px; border-top: 3px solid #667eea; padding-top: 20px;">
+                        <thead>
+                            <tr style="background: #27ae60;">
+                                <th>Categoría</th>
+                                <th style="text-align: right;">Monto Prestado</th>
+                                <th style="text-align: right;">Abonos</th>
+                                <th style="text-align: right;">Saldo Pendiente</th>
+                                <th style="text-align: center;">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="background: #e8f5e9;">
+                                <td><strong>Identificados (CONFIRMADOS)</strong></td>
+                                <td style="text-align: right; color: #27ae60; font-weight: 600;">$166,850.00</td>
+                                <td style="text-align: right;">$(27,021.00)</td>
+                                <td style="text-align: right; color: #27ae60; font-weight: 600;">$139,829.00</td>
+                                <td style="text-align: center;"><span class="status-badge status-ok">✅ PAGAR</span></td>
+                            </tr>
+                            <tr style="background: #fff3cd;">
+                                <td><strong>Posibles a Padres</strong></td>
+                                <td style="text-align: right; color: #f39c12; font-weight: 600;">$5,600.00</td>
+                                <td style="text-align: right;">$0.00</td>
+                                <td style="text-align: right; color: #f39c12; font-weight: 600;">$5,600.00</td>
+                                <td style="text-align: center;"><span class="status-badge status-warning">⚠️
+                                        VERIFICAR</span></td>
+                            </tr>
+                            <tr style="background: #e8f4f8;">
+                                <td><strong>Intereses/Comisiones</strong></td>
+                                <td style="text-align: right; color: #0288d1; font-weight: 600;">$12,140.00</td>
+                                <td style="text-align: right;">$0.00</td>
+                                <td style="text-align: right; color: #0288d1; font-weight: 600;">$12,140.00</td>
+                                <td style="text-align: center;"><span class="status-badge status-info">⏳ REVISAR</span>
+                                </td>
+                            </tr>
+                            <tr style="background: #f8d7da;">
+                                <td><strong>Posibles a Terceros</strong></td>
+                                <td style="text-align: right; color: #e74c3c; font-weight: 600;">$77,000.00</td>
+                                <td style="text-align: right;">$(7,740.00)</td>
+                                <td style="text-align: right; color: #e74c3c; font-weight: 600;">$69,260.00</td>
+                                <td style="text-align: center;"><span class="status-badge status-danger">❌ NO
+                                        PAGAR</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="card verde" style="border-left-color: #27ae60; background: #e8f5e9; margin-top: 20px;">
+                    <h4 style="color: #27ae60; font-size: 1.1em;">💵 Recomendación Final</h4>
+                    <div class="card-value" style="color: #27ae60; font-size: 2.5em;">$139,829</div>
+                    <p style="margin-top: 10px; color: #27ae60; font-weight: 600;">Monto mínimo confirmado a pagar</p>
+                </div>
+            </div>
+
+            <!-- CATEGORÍAS -->
+            <div class="section">
+                <h2>🎯 Análisis por Categoría</h2>
+
+                <h3>✅ Categoría 1: Montos Identificados ($166,850)</h3>
+                <div class="conclusiones">
+                    <p><strong>Descripción:</strong> Estos son montos que aparecen en AMBAS libretas (padres y Mari),
+                        están confirmados.</p>
+                    <p><strong>Cantidad:</strong> 10 montos únicos</p>
+                    <p><strong>Total:</strong> $166,850.00</p>
+                    <p><strong>Abonos confirmados:</strong> $27,021.00</p>
+                    <p><strong>Saldo confirmado:</strong> $139,829.00</p>
+                    <p
+                        style="margin-top: 15px; background: #d4edda; padding: 10px; border-radius: 5px; color: #155724;">
+                        <strong>✅ Recomendación:</strong> Estos montos deben ser pagados prioritariamente.</p>
+                </div>
+
+                <h3>⚠️ Categoría 2: Posibles a Padres ($5,600)</h3>
+                <div class="conclusiones">
+                    <p><strong>Descripción:</strong> Montos que aparecen solo en la libreta de Mari, probablemente
+                        dirigidos a los padres.</p>
+                    <p><strong>Cantidad:</strong> 1 monto (ID 34)</p>
+                    <p><strong>Monto:</strong> $5,600.00</p>
+                    <p
+                        style="margin-top: 15px; background: #fff3cd; padding: 10px; border-radius: 5px; color: #856404;">
+                        <strong>⚠️ Recomendación:</strong> Confirmar con Mari y los padres si efectivamente lo
+                        recibieron. Podría incrementar el saldo a $145,429.00</p>
+                </div>
+
+                <h3>⏳ Categoría 3: Intereses/Comisiones ($12,140)</h3>
+                <div class="conclusiones">
+                    <p><strong>Descripción:</strong> Montos que podrían ser intereses por mora, comisiones o gastos
+                        administrativos.</p>
+                    <p><strong>Cantidad:</strong> 9 montos</p>
+                    <p><strong>Total:</strong> $12,140.00</p>
+                    <p
+                        style="margin-top: 15px; background: #d1ecf1; padding: 10px; border-radius: 5px; color: #0c5460;">
+                        <strong>⏳ Recomendación:</strong> Revisar con Mari si estos montos ya fueron cancelados. Podría
+                        incrementar el saldo en $12,140.00 si son válidos.</p>
+                </div>
+
+                <h3>❌ Categoría 4: Posibles a Terceros ($77,000)</h3>
+                <div class="conclusiones">
+                    <p><strong>Descripción:</strong> Estos montos NO son para los padres. Mari los prestó a otras
+                        personas.</p>
+                    <p><strong>Cantidad:</strong> 7 montos</p>
+                    <p><strong>Total:</strong> $77,000.00</p>
+                    <p><strong>Beneficiarios:</strong> Don Jose, Mayra, Dora, Alma, Felix, Chave, Mireya, Manuela</p>
+                    <p
+                        style="margin-top: 15px; background: #f8d7da; padding: 10px; border-radius: 5px; color: #721c24;">
+                        <strong>❌ Recomendación:</strong> NO deben ser pagados por los padres. Son deudas de terceros
+                        con Mari.</p>
+                </div>
+            </div>
+
+            <!-- CONCLUSIONES -->
+            <div class="section">
+                <h2>✅ Conclusiones y Próximos Pasos</h2>
+
+                <h3>Hallazgos Clave</h3>
+                <ul class="conclusiones" style="list-style: none;">
+                    <li>✅ <strong>Deuda Confirmada: $139,829</strong> - Montos cruzados verificados. Listo para pago
+                        inmediato.</li>
+                    <li>⚠️ <strong>Posibles Adiciones: $18,340</strong> - Requiere verificación (incluye $5,600 +
+                        $12,140)</li>
+                    <li>❌ <strong>Exonerados: $77,000</strong> - Préstamos a terceros, NO responsabilidad de los padres
+                    </li>
+                    <li>📊 <strong>Total Analizado: $273,590</strong> - 22 montos únicos clasificados y documentados
+                    </li>
+                </ul>
+
+                <h3 style="margin-top: 30px;">Plan de Acción</h3>
+                <div style="background: #f0f4ff; padding: 20px; border-radius: 8px;">
+                    <ol style="margin-left: 20px;">
+                        <li style="margin-bottom: 10px;"><strong>Descarga el PDF:</strong>
+                            "Reporte_Montos_No_Cruzados.pdf" para llevar a la reunión</li>
+                        <li style="margin-bottom: 10px;"><strong>Programa reunión</strong> con Mari con esta
+                            documentación</li>
+                        <li style="margin-bottom: 10px;"><strong>Revisar línea por línea</strong> cada monto
+                            identificado</li>
+                        <li style="margin-bottom: 10px;"><strong>Validar categorías:</strong>
+                            <ul style="margin-left: 20px; margin-top: 5px;">
+                                <li>✅ Confirmar montos identificados ($166,850)</li>
+                                <li>⚠️ Aclarar posibles préstamos a padres ($5,600)</li>
+                                <li>⏳ Revisar intereses ya pagados ($12,140)</li>
+                                <li>❌ Confirmar que terceros NO son responsabilidad de padres ($77,000)</li>
+                            </ul>
+                        </li>
+                        <li style="margin-bottom: 10px;"><strong>Firmar acuerdo final</strong> con monto confirmado</li>
+                        <li style="margin-bottom: 10px;"><strong>Crear plan de pagos</strong> según capacidad de los
+                            padres</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- DOCUMENTOS DISPONIBLES -->
+            <div class="section">
+                <h2>📁 Documentos Disponibles</h2>
+
+                <h3>📊 Reportes PDF</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Archivo</th>
+                            <th>Descripción</th>
+                            <th>Tamaño</th>
+                            <th>Uso</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Reporte_Montos_No_Cruzados.pdf</strong></td>
+                            <td>Reporte final profesional con todas las categorías</td>
+                            <td>7.1 KB</td>
+                            <td style="text-align: center;"><span class="status-badge status-ok">Usar en reunión</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Analisis_Tablas_Detalladas.pdf</td>
+                            <td>Tablas completas con IDs de cada monto</td>
+                            <td>8.3 KB</td>
+                            <td style="text-align: center;"><span class="status-badge status-info">Referencia</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Analisis_Prestamos.pdf</td>
+                            <td>Análisis inicial con gráficos</td>
+                            <td>6.1 KB</td>
+                            <td style="text-align: center;"><span class="status-badge status-info">Referencia</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 style="margin-top: 20px;">📊 Datos en CSV</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Archivo</th>
+                            <th>Descripción</th>
+                            <th>Registros</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Consolidado_Prestamos.csv</strong></td>
+                            <td>Base de datos consolidada con todos los registros</td>
+                            <td>28 registros</td>
+                        </tr>
+                        <tr>
+                            <td>Matriz_Identificacion_Montos.csv</td>
+                            <td>Matriz de 22 montos únicos con clasificación</td>
+                            <td>22 montos</td>
+                        </tr>
+                        <tr>
+                            <td>Montos_No_Cruzados_Mari.csv</td>
+                            <td>17 montos no cruzados con IDs y notas</td>
+                            <td>17 montos</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 style="margin-top: 20px;">📓 Documentos</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Archivo</th>
+                            <th>Tipo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>README.md</strong></td>
+                            <td>Documentación completa del proyecto</td>
+                        </tr>
+                        <tr>
+                            <td>analisis.ipynb</td>
+                            <td>Análisis interactivo con Jupyter Notebook</td>
+                        </tr>
+                        <tr>
+                            <td>RESUMEN_ANALISIS_FINAL.txt</td>
+                            <td>Guía paso a paso del análisis</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>📊 Análisis de Reconciliación de Préstamos • Generado: 7 de diciembre de 2025</p>
+            <p style="margin-top: 10px;">Tecnología: Python • Pandas • ReportLab • Chart.js</p>
+        </div>
+    </div>
+
+    <script>
+        // Gráfico Pie - Distribución de Montos
+        const ctxPie = document.getElementById('grafico-pie').getContext('2d');
+        new Chart(ctxPie, {
+            type: 'doughnut',
+            data: {
+                labels: ['Identificados\n$166,850', 'Posibles Terceros\n$77,000', 'Intereses\n$12,140', 'Posibles Padres\n$5,600'],
+                datasets: [{
+                    data: [166850, 77000, 12140, 5600],
+                    backgroundColor: [
+                        '#27ae60',
+                        '#e74c3c',
+                        '#f39c12',
+                        '#3498db'
+                    ],
+                    borderColor: '#fff',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 20,
+                            font: { size: 12 }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function (context) {
+                                const total = 273590;
+                                const percentage = ((context.parsed / total) * 100).toFixed(1);
+                                return context.label + ' (' + percentage + '%)';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Gráfico Barras - Cantidad por Categoría
+        const ctxBarras = document.getElementById('grafico-barras').getContext('2d');
+        new Chart(ctxBarras, {
+            type: 'bar',
+            data: {
+                labels: ['Identificados', 'Posibles\nTerceros', 'Intereses', 'Posibles\nPadres'],
+                datasets: [{
+                    label: 'Monto ($)',
+                    data: [166850, 77000, 12140, 5600],
+                    backgroundColor: [
+                        '#27ae60',
+                        '#e74c3c',
+                        '#f39c12',
+                        '#3498db'
+                    ],
+                    borderRadius: 8,
+                    borderSkipped: false
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function (value) {
+                                return '$' + value.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Gráfico Personas
+        const ctxPersonas = document.getElementById('grafico-personas').getContext('2d');
+        new Chart(ctxPersonas, {
+            type: 'bar',
+            data: {
+                labels: ['José Luis', 'María Elena', 'Mari Consolidado'],
+                datasets: [{
+                    label: 'Total en Libreta ($)',
+                    data: [137570, 135900, 273590],
+                    backgroundColor: ['#667eea', '#764ba2', '#e74c3c'],
+                    borderRadius: 8,
+                    borderSkipped: false
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function (value) {
+                                return '$' + value.toLocaleString();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
